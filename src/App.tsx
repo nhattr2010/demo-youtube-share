@@ -6,23 +6,22 @@ import List from "./pages/List";
 import Share from "./pages/Share";
 import { ERoute } from "./constants/route";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <div className="App">
-      <Header/>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home/>}/>
-          <Route path={ERoute.List} element={<List/>}/>
-          <Route element={<ProtectedRoute/>}>
-            <Route path={ERoute.Share} element={<Share/>}/>
+          <Route element={<Layout/>}>
+            <Route index element={<Home/>}/>
+            <Route path={ERoute.List} element={<List/>}/>
+            <Route element={<ProtectedRoute/>}>
+              <Route path={ERoute.Share} element={<Share/>}/>
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
-      <Footer/>
     </div>
   );
 }

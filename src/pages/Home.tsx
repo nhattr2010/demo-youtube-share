@@ -1,9 +1,10 @@
 import React from 'react';
+import SharedList from '../components/SharedList/SharedList';
 
 function Home() {
   return (
-    <div className="Home">
-      <h1>Home</h1>
+    <div className="body">
+      <SharedList />
     </div>
   );
 }

@@ -5,7 +5,7 @@ const ProtectedRoute = () => {
   //todo Get User from redux
   const user = null;
   if (!user) {
-    return <Navigate to={ERoute.Home} replace />;
+    // return <Navigate to={ERoute.Home} replace />;
   }
 
   return <Outlet />;

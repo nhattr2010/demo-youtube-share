@@ -1,11 +1,22 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ERoute } from "../constants/route";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../selectors/user";
+import AuthForm from "./AuthForm/AuthForm";
+import { logout } from "../redux/user/user.action";
+
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser)
   const onShareClick = useCallback(() => {
     navigate(ERoute.Share);
-  },[navigate])
+  }, [navigate])
+
+  const onLogout = useCallback(() => {
+    dispatch(logout())
+  }, [dispatch])
 
   return (
     <div>
@@ -14,12 +25,12 @@ const Header = () => {
           Funny Movies
         </div>
         <div className={'row'}>
-          {/*<span>Welcome thnhat.cse@gmail.com</span>*/}
-          <input placeholder={'Email'}/>
-          <input placeholder={'Password'}/>
-          <button onClick={onShareClick}>Share a movie</button>
-          <button>Login / Register</button>
-          <button>Logout</button>
+          {user.email ? <>
+            <span className={'header-email'}>Welcome <b>{user.email}</b></span>
+            <button onClick={onShareClick}>Share a movie</button>
+            <button onClick={onLogout}>Log out</button>
+          </> : <AuthForm/>
+          }
         </div>
       </header>
     </div>

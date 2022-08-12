@@ -27,6 +27,11 @@
     padding: 30px 50px
 }
 
+.header-email {
+    font-size: 15px;
+    line-height: 30px;
+}
+
 input {
     box-sizing: border-box;
     width: 100%;

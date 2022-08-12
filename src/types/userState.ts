@@ -1,4 +1,6 @@
 export interface IUserState {
-  email: string;
+  data: {
+    email: string
+  };
   loggingIn: boolean
 }

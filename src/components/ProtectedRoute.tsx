@@ -2,10 +2,10 @@ import React from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 import { ERoute } from "../constants/route";
 import { useSelector } from "react-redux";
-import { selectUser } from "../selectors/user";
+import { selectUserData } from "../selectors/user";
 
 const ProtectedRoute = () => {
-  const user = useSelector(selectUser);
+  const user = useSelector(selectUserData);
   if (!user.email) {
     return <Navigate to={ERoute.Home} replace/>;
   }

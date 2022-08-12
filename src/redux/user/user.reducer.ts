@@ -4,11 +4,13 @@ import {
 import { IUserState } from "../../types/userState";
 
 export const userInitialState: IUserState = {
-  email: "",
+  data: {
+    email: "",
+  },
   loggingIn: false,
 };
 
-const userReducer = (state = userInitialState, action: { type: any; payload: any }) => {
+const userReducer = (state = userInitialState, action: { type: any; payload?: any }) => {
   const {
     payload,
     type
@@ -24,7 +26,9 @@ const userReducer = (state = userInitialState, action: { type: any; payload: any
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        email: payload.email,
+        data: {
+          email: payload.email,
+        },
         loggingIn: false,
       }
     }

@@ -6,7 +6,7 @@ import { TLoginAction } from "./user.type";
 import { Login as loginAPI } from "../../apis/user";
 import { TUser } from "../../types/user";
 
-function* performLogin(action: TLoginAction) {
+export function* performLogin(action: TLoginAction) {
   yield put(loginStart())
   try {
     const {

@@ -8,7 +8,6 @@ const AuthForm = () => {
   const isLoggingIn = useSelector(selectUserLoggingIn)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const onSubmit = () => {
     dispatch(login({email, password}));
   }
@@ -23,7 +22,12 @@ const AuthForm = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={onSubmit} disabled={isLoggingIn}>Login / Register</button>
+      <button
+        onClick={onSubmit}
+        disabled={isLoggingIn}
+        data-testid="login-btn">
+        Login / Register
+      </button>
     </>
   );
 }

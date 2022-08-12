@@ -2,14 +2,14 @@ import React, { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ERoute } from "../constants/route";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../selectors/user";
+import { selectUserData } from "../selectors/user";
 import AuthForm from "./AuthForm/AuthForm";
 import { logout } from "../redux/user/user.action";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(selectUser)
+  const user = useSelector(selectUserData)
   const onShareClick = useCallback(() => {
     navigate(ERoute.Share);
   }, [navigate])

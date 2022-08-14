@@ -4,8 +4,9 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'
 import rootReducer from "./root.reducer";
 import rootSagas from "./root.saga";
-import { IApplicationState } from "../types/applicationState";
+import { IApplicationState } from "../types/redux/applicationState";
 import { userInitialState } from "./user/user.reducer";
+import { movieInitState } from "./movie/movie.reducer";
 // Create sagas middleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,8 +26,9 @@ const persistConfig = {
   storage,
 };
 
-const appState: IApplicationState = {
-  user: userInitialState
+export const appState: IApplicationState = {
+  user: userInitialState,
+  movie: movieInitState
 }
 
 function configureStore(initState: IApplicationState) {
@@ -37,6 +39,7 @@ function configureStore(initState: IApplicationState) {
 
   const store = createStore(
     persistedRootReducer,
+    //@ts-ignore
     initState,
     composeEnhancers(applyMiddleware(sagaMiddleware))
   );

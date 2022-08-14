@@ -4,24 +4,29 @@ import Card from '../Core/Card';
 import Description from '../Core/Description';
 import Title from '../Core/Title';
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
+import { TUserInteraction } from "../../types/user";
 
 export type TData = {
+  _id: string,
   url: string,
   title: string,
   description: string
-  sharedBy: string
-  thumbUp: number
-  thumbDown: number
+  createdBy: string
+  thumbUp?: number
+  thumbDown?: number
+  interaction?: TUserInteraction
 }
 
 
 const SharedListItem: FC<TData> = ({
+                                     _id,
                                      url,
                                      title,
                                      description,
-                                     sharedBy,
-                                     thumbDown,
-                                     thumbUp
+                                     createdBy,
+                                     thumbDown = 0,
+                                     thumbUp = 0,
+                                     interaction
                                    }) => {
   return (
     <div>
@@ -32,8 +37,8 @@ const SharedListItem: FC<TData> = ({
           </iframe>
         </div>
         <Card>
-          <Title title={title}/>
-          <Author sharedBy={sharedBy}/>
+          <Title title={title} id={_id} interaction={interaction}/>
+          <Author createdBy={createdBy}/>
           <div className={'row'}>
             <div className={'reaction'}><span>{thumbUp}</span> <FaRegThumbsUp/></div>
             <div className={'reaction'}><span>{thumbDown}</span> <FaRegThumbsDown/></div>

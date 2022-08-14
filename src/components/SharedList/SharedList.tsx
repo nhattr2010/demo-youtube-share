@@ -1,37 +1,60 @@
-import React from 'react';
-import SharedListItem, { TData } from './SharedListItem';
+import React, { useCallback, useEffect } from 'react';
+import SharedListItem from './SharedListItem';
+import { useDispatch, useSelector } from "react-redux";
+import { selectMovieVotes, selectSharedMovies } from "../../selectors/movie";
+import { getSharedMovies } from "../../redux/movie/movie.action";
+import { selectUserData, selectUserInteractions } from "../../selectors/user";
+import { getInteractions } from '../../redux/user/user.action';
+import ReactPaginate from "react-paginate";
+import { ROW_PER_PAGE } from "../../constants/common";
 
-const mockData: TData[] = [{
-  url: "https://www.youtube.com/embed/XqZsoesa55w",
-  title: "Lorem ipsum dolor sit amet",
-  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  sharedBy: "Nhat Truong",
-  thumbDown: 21,
-  thumbUp: 23
-}, {
-  url: "https://www.youtube.com/embed/XqZsoesa55w",
-  title: "Lorem ipsum dolor sit amet",
-  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  sharedBy: "Nhat Truong",
-  thumbDown: 21,
-  thumbUp: 23
-},
-  {
-    url: "https://www.youtube.com/embed/XqZsoesa55w",
-    title: "Lorem ipsum dolor sit amet",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    sharedBy: "Nhat Truong",
-    thumbDown: 21,
-    thumbUp: 23
-  }]
 const SharedList = () => {
+  const dispatch = useDispatch();
+  const {list: sharedMovies, total} = useSelector(selectSharedMovies)
+  const sharedMovieVotes = useSelector(selectMovieVotes)
+  const userInteractions = useSelector(selectUserInteractions)
+  const user = useSelector(selectUserData)
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch(getSharedMovies({offset: 0, limit: ROW_PER_PAGE}))
+    }
+  }, [dispatch])
+
+  useEffect(() => {
+    if (user?._id && sharedMovies.length) {
+      dispatch(getInteractions(user._id, sharedMovies.map(sharedMovie => sharedMovie._id)))
+    }
+  }, [dispatch, user, sharedMovies]);
+
+  const onPageChange = useCallback(({selected}: { selected: number }) => {
+    if (dispatch) {
+      dispatch(getSharedMovies({offset: selected * ROW_PER_PAGE, limit: ROW_PER_PAGE}))
+    }
+  }, [dispatch])
   return (
     <div>
       {
-        mockData.map((item, index) => {
-          return <SharedListItem key={index} {...item} />
+        sharedMovies.map((item) => {
+          return <SharedListItem key={item._id}
+                                 {...item}
+                                 {...sharedMovieVotes[item._id]}
+                                 interaction={userInteractions[item._id]}/>
         })
       }
+      <div className={'row center'}>
+        {
+          total > 1 ? <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            onPageChange={onPageChange}
+            pageRangeDisplayed={5}
+            pageCount={total}
+            containerClassName="pagination"
+            previousLabel="Previous"
+          /> : null
+        }
+      </div>
     </div>
   );
 }

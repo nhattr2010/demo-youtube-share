@@ -20,9 +20,19 @@ describe('UserSaga', () => {
       .put(loginStart())
       .next()
       .call(loginAPI, MOCK_USER.email, 'password')
-      .next(MOCK_USER)
+      .next({status: 200, data: MOCK_USER})
       .put(loginSuccess(MOCK_USER))
       .next()
+      .isDone()
+  });
+
+  it('Handle error status code', () => {
+    testSaga(performLogin, mockLoginAction)
+      .next()
+      .put(loginStart())
+      .next()
+      .call(loginAPI, MOCK_USER.email, 'password')
+      .next({status: 403, data: MOCK_USER})
       .isDone()
   });
 

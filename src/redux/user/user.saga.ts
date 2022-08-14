@@ -1,10 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { LOGIN } from "./user.const";
 import { SagaIterator } from "redux-saga";
-import { loginFailure, loginStart, loginSuccess } from "./user.action";
-import { TLoginAction } from "./user.type";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess
+} from "./user.action";
+import { TLoginAction, TUserRes } from "./user.type";
 import { Login as loginAPI } from "../../apis/user";
-import { TUser } from "../../types/user";
+import { EAPIStatus } from "../../constants/apis";
 
 export function* performLogin(action: TLoginAction) {
   yield put(loginStart())
@@ -13,11 +17,12 @@ export function* performLogin(action: TLoginAction) {
       email,
       password
     } = action.payload
-    const response: TUser = yield call(loginAPI, email, password);
-    if (response) {
-      yield put(loginSuccess(response));
+    const response: TUserRes = yield call(loginAPI, email, password);
+    if (response.status === EAPIStatus.Success) {
+      yield put(loginSuccess(response.data));
     }
-  } catch (error) {
+  } catch
+    (error) {
     yield put(loginFailure());
   }
 }

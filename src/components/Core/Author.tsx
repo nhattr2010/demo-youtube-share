@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 
 interface TAuthorProps {
-  sharedBy: string
+  createdBy: string
 }
 
-const Author: FC<TAuthorProps> = ({sharedBy}) => {
+const Author: FC<TAuthorProps> = ({createdBy}) => {
   return (
     <div className={'description'}>
-      <span>Shared by: {sharedBy}</span>
+      <span>Shared by: {createdBy}</span>
     </div>
   );
 }

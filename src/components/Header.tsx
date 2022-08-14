@@ -10,6 +10,11 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUserData)
+
+  const onHomeClick = useCallback(() => {
+    navigate(ERoute.Home);
+  }, [navigate])
+
   const onShareClick = useCallback(() => {
     navigate(ERoute.Share);
   }, [navigate])
@@ -17,15 +22,14 @@ const Header = () => {
   const onLogout = useCallback(() => {
     dispatch(logout())
   }, [dispatch])
-
   return (
     <div>
       <header className="row app-header">
-        <div>
+        <div onClick={onHomeClick} className={'pointer'}>
           Funny Movies
         </div>
         <div className={'row'}>
-          {user.email ? <>
+          {user?.email ? <>
             <span className={'header-email'}>Welcome <b>{user.email}</b></span>
             <button onClick={onShareClick}>Share a movie</button>
             <button onClick={onLogout}>Log out</button>

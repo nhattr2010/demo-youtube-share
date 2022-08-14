@@ -18,6 +18,10 @@
     flex-direction: row
 }
 
+.center {
+    justify-content: center;
+}
+
 .app-header {
     background-color: #f3f3f6;
     align-items: center;
@@ -79,6 +83,16 @@ button {
     font-size: 14px;
     border-radius: 2px;
     margin: 0 10px
+}
+
+.title-container span.icon {
+    color: #40a9ff;
+}
+
+.title-container button {
+    background-color: unset;
+    color: #000;
+    padding: 0;
 }
 
 .body {
@@ -145,4 +159,33 @@ button {
     to {
         transform: rotate(360deg);
     }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.pagination {
+    cursor: pointer;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}
+
+.pagination li.selected a {
+    z-index: 3;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.pagination a {
+    position: relative;
+    display: block;
+    color: #000;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: 0.375rem 0.75rem;
 }

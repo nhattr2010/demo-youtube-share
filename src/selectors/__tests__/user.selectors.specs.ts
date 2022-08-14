@@ -1,10 +1,12 @@
 import { selectUser, selectUserData, selectUserLoggingIn } from "../user";
 import { MOCK_USER } from "../../mock/user";
 import { EReducerNamespaces } from "../../constants/reducerNamespaces";
-import { IApplicationState } from "../../types/applicationState";
+import { IApplicationState } from "../../types/redux/applicationState";
+import { appState } from "../../redux/store";
 
 
 const mockState: IApplicationState = {
+  ...appState,
   [EReducerNamespaces.User]: {
     data: {...MOCK_USER},
     loggingIn: false,

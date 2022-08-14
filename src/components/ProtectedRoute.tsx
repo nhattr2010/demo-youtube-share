@@ -6,7 +6,7 @@ import { selectUserData } from "../selectors/user";
 
 const ProtectedRoute = () => {
   const user = useSelector(selectUserData);
-  if (!user.email) {
+  if (!user?.email) {
     return <Navigate to={ERoute.Home} replace/>;
   }
 

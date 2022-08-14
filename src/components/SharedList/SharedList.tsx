@@ -35,12 +35,14 @@ const SharedList = () => {
   return (
     <div>
       {
-        sharedMovies.map((item) => {
-          return <SharedListItem key={item._id}
-                                 {...item}
-                                 {...sharedMovieVotes[item._id]}
-                                 interaction={userInteractions[item._id]}/>
-        })
+        sharedMovies.length ?
+          sharedMovies.map((item) => {
+            return <SharedListItem key={item._id}
+                                   {...item}
+                                   {...sharedMovieVotes[item._id]}
+                                   interaction={userInteractions[item._id]}/>
+          }) :
+          <span>No data</span>
       }
       <div className={'row center'}>
         {
@@ -49,7 +51,7 @@ const SharedList = () => {
             nextLabel="Next"
             onPageChange={onPageChange}
             pageRangeDisplayed={5}
-            pageCount={total}
+            pageCount={Math.ceil(total / ROW_PER_PAGE)}
             containerClassName="pagination"
             previousLabel="Previous"
           /> : null

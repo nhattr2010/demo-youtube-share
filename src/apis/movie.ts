@@ -1,11 +1,12 @@
 import { TMovieRes, TMovieSharedRes } from "../redux/movie/movie.type";
+import { API_V1_ENDPOINT } from "../constants/common";
 
 export const getList = async (offset: number, limit: number): Promise<TMovieRes> => {
   const requestOptions = {
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
   };
-  const response = await fetch(`http://localhost:3001/api/v1/movie/all?offset=${offset}&limit=${limit}`, requestOptions);
+  const response = await fetch(`${API_V1_ENDPOINT}/movie/all?offset=${offset}&limit=${limit}`, requestOptions);
   return await response.json();
 }
 export const shareMovie = async (url: string, createdBy: string): Promise<TMovieSharedRes> => {
@@ -14,7 +15,7 @@ export const shareMovie = async (url: string, createdBy: string): Promise<TMovie
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({url, createdBy}),
   };
-  const response = await fetch('http://localhost:3001/api/v1/movie', requestOptions);
+  const response = await fetch(`${API_V1_ENDPOINT}/movie`, requestOptions);
   return await response.json();
 }
 

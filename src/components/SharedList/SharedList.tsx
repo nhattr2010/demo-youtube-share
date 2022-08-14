@@ -42,7 +42,7 @@ const SharedList = () => {
                                    {...sharedMovieVotes[item._id]}
                                    interaction={userInteractions[item._id]}/>
           }) :
-          <span>No data</span>
+          <span data-testid={'nodata'}>No data</span>
       }
       <div className={'row center'}>
         {

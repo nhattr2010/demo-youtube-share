@@ -15,12 +15,14 @@ const AuthForm = () => {
     <>
       <input placeholder={'Email'}
              value={email}
+             data-testid="email"
              onChange={(e) => setEmail(e.target.value)}
       />
       <input
         placeholder={'Password'}
         value={password}
         type="password"
+        data-testid="password"
         onChange={(e) => setPassword(e.target.value)}
       />
       <button

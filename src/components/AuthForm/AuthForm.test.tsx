@@ -16,6 +16,7 @@ describe("AuthForm", () => {
     renderWithWrappers(<AuthForm/>);
     const button = screen.getByTestId('login-btn');
     fireEvent.click(button)
+    expect(button).toBeDisabled();
     expect(mockDispatch).toHaveBeenCalledTimes(0);
   });
 
@@ -30,6 +31,26 @@ describe("AuthForm", () => {
       payload: {
         email: '',
         password: ''
+      }
+    });
+  });
+
+  test('Should dispatch login action when click button with new value', () => {
+    const mockDispatch = jest.fn();
+    (useDispatch as jest.Mock).mockReturnValue(mockDispatch);
+    renderWithWrappers(<AuthForm/>);
+    const button = screen.getByTestId('login-btn');
+    const emailField = screen.getByTestId('email');
+    const passwordField = screen.getByTestId('password');
+
+    fireEvent.change(emailField, {target: {value: 'test@email.com'}});
+    fireEvent.change(passwordField, {target: {value: 'password'}});
+    fireEvent.click(button)
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: 'LOGIN',
+      payload: {
+        email: 'test@email.com',
+        password: 'password'
       }
     });
   });

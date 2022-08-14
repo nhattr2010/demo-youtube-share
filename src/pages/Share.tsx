@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { shareMovie as shareMovieAPI } from '../apis/movie';
 import { selectUserData } from "../selectors/user";
 import { TMovieSharedRes } from "../redux/movie/movie.type";
@@ -8,7 +8,6 @@ import { ERoute } from "../constants/route";
 import { useNavigate } from "react-router-dom";
 
 function Share() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUserData)
   const [loading, setLoading] = useState(false)
@@ -24,12 +23,11 @@ function Share() {
           }
           setLoading(false)
         } catch (e) {
-          console.error(e)
           setLoading(false)
         }
       }
     },
-    [navigate, url, dispatch, user?._id]
+    [navigate, url, user?._id]
   )
 
   return (
@@ -37,12 +35,12 @@ function Share() {
       <h1>Share a Youtube movie</h1>
       <div className={'row'}>
         <label>Youtube URL</label>
-        <input value={url} onChange={
+        <input data-testid="video-input" value={url} onChange={
           (e) => setUrl(e.target.value)
         }/>
       </div>
       <br/>
-      <button onClick={onShareClick} disabled={loading}>Share</button>
+      <button onClick={onShareClick} data-testid={'share-btn'} disabled={loading}>Share</button>
     </div>
   );
 }

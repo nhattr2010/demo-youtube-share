@@ -1,14 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { LOGIN } from "./user.const";
+import { GET_INTERACTION, LOGIN } from "./user.const";
 import { SagaIterator } from "redux-saga";
-import {
-  loginFailure,
-  loginStart,
-  loginSuccess
-} from "./user.action";
-import { TLoginAction, TUserRes } from "./user.type";
+import { getInteractionSuccess, loginFailure, loginStart, loginSuccess } from "./user.action";
+import { TGetInteractionsAction, TLoginAction, TUserInteractionsRes, TUserRes } from "./user.type";
 import { Login as loginAPI } from "../../apis/user";
 import { EAPIStatus } from "../../constants/apis";
+import { getInteractions as getInteractionsAPI } from "../../apis/interaction";
 
 export function* performLogin(action: TLoginAction) {
   yield put(loginStart())
@@ -27,6 +24,23 @@ export function* performLogin(action: TLoginAction) {
   }
 }
 
+export function* performGetInteraction(action: TGetInteractionsAction) {
+  try {
+    const {
+      userId,
+      movies
+    } = action.payload
+    const response: TUserInteractionsRes = yield call(getInteractionsAPI, userId, movies);
+    if (response.status === EAPIStatus.Success) {
+      yield put(getInteractionSuccess(response.data));
+    }
+  } catch
+    (error) {
+    yield put(loginFailure());
+  }
+}
+
 export function* userSaga(): SagaIterator {
   yield takeLatest(LOGIN, performLogin);
+  yield takeLatest(GET_INTERACTION, performGetInteraction);
 }

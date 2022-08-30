@@ -22,10 +22,10 @@ const SharedList = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (user?._id && sharedMovies.length) {
+    if (user?._id && sharedMovies.length && dispatch) {
       dispatch(getInteractions(user._id, sharedMovies.map(sharedMovie => sharedMovie._id)))
     }
-  }, [dispatch, user, sharedMovies]);
+  }, [user?._id, sharedMovies, dispatch]);
 
   const onPageChange = useCallback(({selected}: { selected: number }) => {
     if (dispatch) {

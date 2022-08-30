@@ -29,7 +29,6 @@ const Title: FC<TTitleProps> = ({id, title, interaction}) => {
         }
         setLoading(false);
       } catch (e) {
-        console.log(e)
         setLoading(false);
       }
     }

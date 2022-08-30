@@ -9,7 +9,6 @@ import {
 } from "./user.const";
 import { TInteractSuccessPayload, TLogin } from "./user.type";
 import { TUser, TUserInteraction } from "../../types/user";
-import { TMovie } from "../../types/movie";
 
 export const login = ({email, password}: TLogin) => ({
   type: LOGIN,
@@ -43,7 +42,7 @@ export const getInteractions = (userId: string, movies: string[]) => ({
   }
 })
 
-export const getInteractionsSuccess = (data: TUserInteraction[]) => ({
+export const getInteractionSuccess = (data: TUserInteraction[]) => ({
   type: GET_INTERACTION_SUCCESS,
   payload: data
 })

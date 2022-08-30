@@ -3,8 +3,9 @@ import Author from '../Core/Author';
 import Card from '../Core/Card';
 import Description from '../Core/Description';
 import Title from '../Core/Title';
-import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
-import { TUserInteraction } from "../../types/user";
+import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa';
+import { TUserInteraction } from '../../types/user';
+import SharedItemComments from './SharedItemComments';
 
 export type TData = {
   _id: string,
@@ -26,28 +27,29 @@ const SharedListItem: FC<TData> = ({
                                      createdBy,
                                      thumbDown = 0,
                                      thumbUp = 0,
-                                     interaction
+                                     interaction,
                                    }) => {
   return (
     <div>
-      <header className="row shared-list-item">
+      <header className='row shared-list-item'>
         <div>
-          <iframe width="320" height="215" style={{border: 'none'}}
+          <iframe width='320' height='215' style={{ border: 'none' }}
                   src={url}>
           </iframe>
         </div>
         <Card>
-          <Title title={title} id={_id} interaction={interaction}/>
-          <Author createdBy={createdBy}/>
+          <Title title={title} id={_id} interaction={interaction} />
+          <Author createdBy={createdBy} />
           <div className={'row'}>
-            <div className={'reaction'}><span>{thumbUp}</span> <FaRegThumbsUp/></div>
-            <div className={'reaction'}><span>{thumbDown}</span> <FaRegThumbsDown/></div>
+            <div className={'reaction'}><span>{thumbUp}</span> <FaRegThumbsUp /></div>
+            <div className={'reaction'}><span>{thumbDown}</span> <FaRegThumbsDown /></div>
           </div>
-          <Description description={description}/>
+          <Description description={description} />
+          <SharedItemComments movieId={_id} />
         </Card>
       </header>
     </div>
   );
-}
+};
 
 export default SharedListItem;

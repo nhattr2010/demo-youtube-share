@@ -10,10 +10,11 @@ export const getList = async (offset: number, limit: number): Promise<TMovieRes>
   return await response.json();
 }
 export const shareMovie = async (url: string, createdBy: string): Promise<TMovieSharedRes> => {
+  const newUrl = url.replace('watch?v=', 'embed/');
   const requestOptions = {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({url, createdBy}),
+    body: JSON.stringify({url: newUrl, createdBy}),
   };
   const response = await fetch(`${API_V1_ENDPOINT}/movie`, requestOptions);
   return await response.json();

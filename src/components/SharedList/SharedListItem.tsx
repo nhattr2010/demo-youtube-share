@@ -5,7 +5,6 @@ import Description from '../Core/Description';
 import Title from '../Core/Title';
 import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa';
 import { TUserInteraction } from '../../types/user';
-import SharedItemComments from './SharedItemComments';
 
 export type TData = {
   _id: string,
@@ -45,7 +44,6 @@ const SharedListItem: FC<TData> = ({
             <div className={'reaction'}><span>{thumbDown}</span> <FaRegThumbsDown /></div>
           </div>
           <Description description={description} />
-          <SharedItemComments movieId={_id} />
         </Card>
       </header>
     </div>
